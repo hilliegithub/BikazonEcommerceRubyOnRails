@@ -4,8 +4,9 @@ class Account < ApplicationRecord
     has_many :orders
     has_many_attached :images
 
-    validates :email, :password, :password_confirmation presence: true
+    validates :email, :password, :password_confirmation, presence: true
     validates :password, confirmation: true
     validates :primarypostalcode, postal_code: true
     validates :secondarypostalcode, postal_code: true
+    devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 end
