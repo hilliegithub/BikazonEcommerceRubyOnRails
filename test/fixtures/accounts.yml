@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: MyString
+  password: MyString
+  primaryaddressstreet: MyString
+  primarypostalcode: MyString
+  secondaryaddressstreet: MyString
+  secondarypostalcode: MyString
+
+two:
+  email: MyString
+  password: MyString
+  primaryaddressstreet: MyString
+  primarypostalcode: MyString
+  secondaryaddressstreet: MyString
+  secondarypostalcode: MyString
