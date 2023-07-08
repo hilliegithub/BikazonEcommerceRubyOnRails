@@ -31,6 +31,8 @@ gem "ruby-vips"
 
 gem "activeadmin"
 
+gem "sassc"
+
 gem "devise"
 
 # Use Redis adapter to run Action Cable in production
