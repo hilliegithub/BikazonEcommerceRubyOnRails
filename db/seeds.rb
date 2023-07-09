@@ -5,14 +5,41 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+require "csv"
 
-
+Product.destroy_all
 Category.destroy_all
 
-bCategories = ["Helmets", "Tires", "Air Filters", "Oil Filters", "Brakes", "Exhausts", "Security"]
+csv_file = Rails.root.join('db/book1.csv')
+csv_data = File.read(csv_file)
+
+csv = CSV.parse(csv_data, headers: true)
+
+
+bCategories = ["Helmets", "Tires", "Air Filter", "Oil Filter", "Brakes", "Exhausts", "Security"]
 
 bCategories.each do |category|
     Category.create(categoryname: category)
+end
+
+csv.each do |product|
+    category = Category.find_by(categoryname: product["category"])
+    puts product["productname"]
+    puts product["price"]
+    puts product["amount"]
+    prod = Product.create(
+        productname: product["productname"],
+        price: product["price"],
+        description: product["description"],
+        amountinstock: product["amount"],
+        category: category
+    )
+    #puts prod.inspect
+    prod.errors.messages.each do |column, errors|
+        errors.each do |error|
+          puts "The #{column} property #{error}."
+        end
+      end
 end
 
 if AdminUser.count < 1
