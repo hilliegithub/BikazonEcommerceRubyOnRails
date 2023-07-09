@@ -24,9 +24,9 @@ end
 
 csv.each do |product|
     category = Category.find_by(categoryname: product["category"])
-    puts product["productname"]
-    puts product["price"]
-    puts product["amount"]
+    #puts product["productname"]
+    #puts product["price"]
+    #puts product["amount"]
     prod = Product.create(
         productname: product["productname"],
         price: product["price"],
