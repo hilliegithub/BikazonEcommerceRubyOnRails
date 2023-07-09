@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_09_175924) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_09_184436) do
   create_table "accounts", force: :cascade do |t|
     t.string "email"
     t.string "password"
@@ -118,6 +118,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_09_175924) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "category_id"
+    t.text "description"
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
