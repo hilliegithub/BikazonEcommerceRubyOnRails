@@ -9,6 +9,14 @@
         <% product = @products.find { |p| p.id == item['id'] } %>
         <%= product.productname %>
         <%= item['qty'] %>
+        <form action="<%= update_cart_path %>" method="post">
+            <p>
+                <%= number_field_tag 'quantity_param', item['qty'], min: 0, max: product['amountinstock'] %>
+            </p>
+            <p>
+                <%= button_to 'update', update_cart_path, params: { id: item['id'] }, method: :put %>
+            </p>
+        </form>
     </li>
 <% end %>
 </ul>

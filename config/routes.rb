@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   delete 'products/remove_from_cart/:id', to: 'products#remove_from_cart', as: 'remove_from_cart'
 
   get '/cart', to: 'cart#index', as: 'cart'
+  put '/cart', to: 'cart#update', as: 'update_cart'
   get '/search', to: "search#index"
   devise_for :accounts
 end
