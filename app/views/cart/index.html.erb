@@ -1,0 +1,14 @@
+<h1>Cart#index</h1>
+<p>
+    You have <%= @cart.count %> items in your cart.
+</p>
+
+<ul>
+<% @cart.each do |item| %>
+    <li>
+        <% product = @products.find { |p| p.id == item['id'] } %>
+        <%= product.productname %>
+        <%= item['qty'] %>
+    </li>
+<% end %>
+</ul>
