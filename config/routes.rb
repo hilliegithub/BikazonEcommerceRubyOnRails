@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  # root "articles#index"
+  root "home#index"
+  get '/categories/:id', to: 'categories#show', as: 'category'
+  get '/products/:id', to: 'products#show', as: 'product'
   devise_for :accounts
 end
