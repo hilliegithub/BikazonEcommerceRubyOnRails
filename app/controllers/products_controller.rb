@@ -4,8 +4,9 @@ class ProductsController < ApplicationController
   end
 
   def add_to_cart
-      #id = params[:id].to_i
-      cartitem = { 'id' => params[:id].to_i, 'qty' => 1}
+      puts params
+      #puts debug params
+      cartitem = { 'id' => params[:id].to_i, 'qty' => params[:quantity_param].to_i}
       #session[:cart] << id unless session[:cart].include? (id)
 
       #puts session[:cart].includes(:id).where('')
