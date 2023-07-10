@@ -1,0 +1,10 @@
+<h1>Search Results</h1>
+<%= @products.count %>
+<ul>
+    <% @products.each do |prod| %>
+        <li>
+            <%= prod.productname %>
+            <%= link_to 'View ' + prod.productname, product_path(prod)  %>
+        </li>
+    <% end %>
+</ul>
