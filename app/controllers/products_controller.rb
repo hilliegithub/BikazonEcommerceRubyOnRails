@@ -4,14 +4,22 @@ class ProductsController < ApplicationController
   end
 
   def add_to_cart
-      id = params[:id].to_i
-      session[:cart] << id unless session[:cart].include? (id)
+      #id = params[:id].to_i
+      cartitem = { 'id' => params[:id].to_i, 'qty' => 1}
+      #session[:cart] << id unless session[:cart].include? (id)
+
+      #puts session[:cart].includes(:id).where('')
+      session[:cart] << cartitem unless session[:cart].any? do |item| item['id'] == cartitem['id'] end
+      puts session[:cart]
+
       redirect_to root_path
     end
 
     def remove_from_cart
       id = params[:id].to_i
-      session[:cart].delete(id)
+      cartitem = session[:cart].delete_if { |a| a['id'] == id}
+      puts cartitem
+      #session[:cart].delete(cartitem)
       redirect_to root_path
   end
 end
