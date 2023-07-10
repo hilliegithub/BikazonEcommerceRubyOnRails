@@ -13,7 +13,7 @@
 <% else %>
 <form action="<%= add_to_cart_path %>" method="post">
     <p>
-        <%= number_field_tag 'quantity_param', nil, min: 1, max: @product.amountinstock %>
+        <%= number_field_tag 'quantity_param', 1, min: 1, max: @product.amountinstock %>
     </p>
     <p>
         <%= button_to 'add to cart', add_to_cart_path, params: { id: @product.id }, method: :post %>

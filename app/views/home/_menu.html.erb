@@ -1,0 +1,18 @@
+<ul>
+    <li>
+        <%= link_to 'Home', root_path %>
+    </li>
+    <li>
+        <%= link_to 'View Cart', cart_path %>
+    </li>
+</ul>
+
+        <%= form_with url: "/search", method: :get do |form| %>
+
+                            <%= form.label :query, "Find Products:" %>
+
+                            <%= form.text_field :query %>
+                            <%= form.submit "Search" %>
+                        </div>
+                    </div>
+                <% end %>
