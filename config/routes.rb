@@ -14,5 +14,9 @@ Rails.application.routes.draw do
   get '/cart', to: 'cart#index', as: 'cart'
   put '/cart', to: 'cart#update', as: 'update_cart'
   get '/search', to: "search#index"
+
+  get '/account/:id', to: "account#show", as: 'account'
+  get '/account/:id/edit', to: "account#edit", as: 'account_edit'
+
   devise_for :accounts
 end

@@ -1,0 +1,47 @@
+<h1>Account Details</h1>
+
+<table>
+  <tr>
+    <th>Email</th>
+    <td><%= @account.email %></td>
+  </tr>
+  <tr>
+    <th>Password</th>
+    <td><%= @account.password %></td>
+  </tr>
+  <tr>
+    <th>Primary Address Street</th>
+    <td><%= @account.primaryaddressstreet.presence || "N/A" %></td>
+  </tr>
+  <tr>
+    <th>Primary Postal Code</th>
+    <td><%= @account.primarypostalcode.presence || "N/A" %></td>
+  </tr>
+  <tr>
+    <th>Secondary Address Street</th>
+    <td><%= @account.secondaryaddressstreet.presence || "N/A" %></td>
+  </tr>
+  <tr>
+    <th>Secondary Postal Code</th>
+    <td><%= @account.secondarypostalcode.presence || "N/A" %></td>
+  </tr>
+  <tr>
+    <th>Primary Province</th>
+    <td><%= @account.primary_province ? @account.primary_province.name : "N/A" %></td>
+  </tr>
+  <tr>
+    <th>Secondary Province</th>
+    <td><%= @account.secondary_province ? @account.secondary_province.name : "N/A" %></td>
+  </tr>
+  <tr>
+    <th>Created At</th>
+    <td><%= @account.created_at %></td>
+  </tr>
+  <tr>
+    <th>Updated At</th>
+    <td><%= @account.updated_at %></td>
+  </tr>
+</table>
+
+<%= link_to 'Edit', '#' %> |
+<%= link_to 'Back', '#' %>
