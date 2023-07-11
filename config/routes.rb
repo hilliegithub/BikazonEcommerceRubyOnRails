@@ -18,5 +18,8 @@ Rails.application.routes.draw do
   get '/account/:id', to: "account#show", as: 'account'
   get '/account/:id/edit', to: "account#edit", as: 'account_edit'
 
+  #resource :contact, only: [:show]
+  resource :about, only: [:show]
+
   devise_for :accounts
 end
