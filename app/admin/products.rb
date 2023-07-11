@@ -61,9 +61,15 @@ ActiveAdmin.register Product do
       f.input :amountinstock
       f.input :category, collection: Category.all.map { |c| [c.categoryname, c.id] }
       f.input :description
-      f.input :images, as: :file, input_html: { multiple: true }
     end
-    f.actions
-  end
 
+    f.inputs "Images" do
+        f.object.images.each do |image|
+          f.input :_destroy, as: :boolean, label: "Delete", wrapper_html: { class: "delete-checkbox" }, input_html: { checked: false }
+          f.input :images, as: :file, :hint => image_tag(image.variant(resize_to_limit: [100,100]))
+              end
+            #f.input :images, as: :file, input_html: { multiple: true }
+        end
+      f.actions
+    end
 end
