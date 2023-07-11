@@ -14,5 +14,28 @@ ActiveAdmin.register Product do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+  index do
+    selectable_column
+    id_column
+    column :productname
+    column :price
+    column :amountinstock
+    column "Category" do |product|
+      product.category.categoryname
+    end
+    column :description
+    actions
+  end
+
+  form do |f|
+    f.inputs "Product Details" do
+      f.input :productname
+      f.input :price
+      f.input :amountinstock
+      f.input :category, collection: Category.all.map { |c| [c.categoryname, c.id] }
+      f.input :description
+    end
+    f.actions
+  end
 
 end
