@@ -5,7 +5,7 @@ ActiveAdmin.register Product do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :productname, :price, :amountinstock, :category_id, :description
+  permit_params :productname, :price, :amountinstock, :category_id, :description, images: []
   #
   # or
   #
@@ -24,7 +24,34 @@ ActiveAdmin.register Product do
       product.category.categoryname
     end
     column :description
+    column  "Images" do |product|
+      product.images.each do |image|
+        span do
+          image_tag(image.variant(resize_to_limit: [100,100]))
+        end
+      end
+    end
     actions
+  end
+
+  show do
+    attributes_table do
+      row :id
+      row :productname
+      row :price
+      row :amountinstock
+      row "Category" do |product|
+        product.category.categoryname
+      end
+      row :description
+      row "Images" do |product|
+        product.images.each do |image|
+          span do
+            image_tag(image.variant(resize_to_limit: [300,300]))
+          end
+        end
+      end
+    end
   end
 
   form do |f|
@@ -34,6 +61,7 @@ ActiveAdmin.register Product do
       f.input :amountinstock
       f.input :category, collection: Category.all.map { |c| [c.categoryname, c.id] }
       f.input :description
+      f.input :images, as: :file, input_html: { multiple: true }
     end
     f.actions
   end
