@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   #resource :contact, only: [:show]
   get '/about', to: "about#index", as: 'about'
+  get '/contact', to: "contact#index", as: 'contact'
 
   devise_for :accounts
 end
