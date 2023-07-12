@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   get '/account/:id', to: "account#show", as: 'account'
   get '/account/:id/edit', to: "account#edit", as: 'account_edit'
-
+  patch '/account/:id/edit', to: "account#update", as: 'account_update'
   #resource :contact, only: [:show]
   get '/about', to: "about#index", as: 'about'
   get '/contact', to: "contact#index", as: 'contact'
