@@ -1,7 +1,13 @@
 class CartController < ApplicationController
   def index
     @products = Product.find(@cart.map { |a| a['id'] })
+
+    @estimated = 0.0
+    @cart.each do |item|
+      @estimated += (item['qty'] * (@products.select {|p| p.id == item['id']}).first.price)
+    end
     puts @cart.inspect
+    puts @estimated.inspect
   end
 
   def update

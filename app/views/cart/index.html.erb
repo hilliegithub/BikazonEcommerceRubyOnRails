@@ -20,3 +20,11 @@
     </li>
 <% end %>
 </ul>
+
+<p>
+    Estimated Total: <%= number_to_currency(@estimated, precision: 2) %>
+</p>
+
+<p>
+    <%= button_to 'Place Order', '#' %>
+</p>
