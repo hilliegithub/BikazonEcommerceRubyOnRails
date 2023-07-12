@@ -1,4 +1,11 @@
 class AccountController < ApplicationController
+  before_action :authenticate_account!
+
+  def authenticate_account!
+      puts "NOOOOO" + params[:id]
+      redirect_to new_account_session_path unless account_signed_in? && (Account.find(params[:id].to_i) == current_account)
+  end
+
   def show
     @account = Account.find(params[:id])
   end
