@@ -5,9 +5,11 @@
     <li>
         <%= link_to 'View Cart', cart_path %>
     </li>
+    <% if account_signed_in? %>
     <li>
-        <%= link_to 'View Account', account_path(id: 1)%>
+            <%= link_to 'View Account', account_path(current_account.id)%>
     </li>
+    <% end %>
 </ul>
 
         <%= form_with url: "/search", method: :get do |form| %>
@@ -22,10 +24,7 @@
                 <% end %>
 <% if account_signed_in? %>
     <%= button_to "logout", destroy_account_session_path, method: :delete %>
-    <p><%= current_account.email %></p>
+    <%# <p><%= current_account.email </p> %>
 <% else %>
     <%= button_to "login", new_account_session_path %>
-<% end %>
-<% if current_account == Account.first %>
-    <p>Correct</p>
 <% end %>
