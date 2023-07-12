@@ -27,11 +27,11 @@
   </tr>
   <tr>
     <th>Primary Province</th>
-    <td><%= @account.primary_province ? @account.primary_province.name : "N/A" %></td>
+    <td><%= @account.primary_province.presence ? Province.find(@account.primary_province_id).provincename : "N/A" %></td>
   </tr>
   <tr>
     <th>Secondary Province</th>
-    <td><%= @account.secondary_province ? @account.secondary_province.name : "N/A" %></td>
+    <td><%= @account.secondary_province ? Province.find(@account.secondary_province_id).provincename : "N/A" %></td>
   </tr>
   <tr>
     <th>Created At</th>
