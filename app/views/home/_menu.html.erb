@@ -17,3 +17,9 @@
                         </div>
                     </div>
                 <% end %>
+<% if account_signed_in? %>
+    <%= button_to "logout", destroy_account_session_path, method: :delete %>
+<% else %>
+    <%= link_to "login", new_account_session_path %>
+<% end %>
+<p><%= account_session %></p>
