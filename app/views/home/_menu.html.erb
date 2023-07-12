@@ -12,6 +12,7 @@
                             <%= form.label :query, "Find Products:" %>
 
                             <%= form.text_field :query %>
+                            <%= form.select :category, options_for_select(["All"] + @search_categories) %>
                             <%= form.submit "Search" %>
                         </div>
                     </div>

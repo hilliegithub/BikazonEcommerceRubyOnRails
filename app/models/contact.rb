@@ -1,3 +1,3 @@
 class Contact < ApplicationRecord
-    validates :phonenumber, :email, :openinghours presence: true
+    validates :phonenumber, :email, :openinghours, presence: true
 end
