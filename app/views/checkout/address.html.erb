@@ -1,0 +1,23 @@
+<%= form_with url: checkout_address_update_path do |form| %>
+  <div>
+    <%= form.label :addressstreet %>
+    <%= form.text_field :addressstreet, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :postalcode %>
+    <%= form.text_field :postalcode, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :primary_province_id %>
+    <%= form.collection_select :primary_province_id, Province.all, :id, :provincename, { prompt: true }, required: true %>
+  </div>
+
+  <div>
+    <%= form.submit "Submit Address" %>
+  </div>
+<% end %>
+
+
+<%= link_to 'Back', '/' %>

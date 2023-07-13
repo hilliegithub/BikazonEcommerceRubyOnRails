@@ -22,5 +22,9 @@ Rails.application.routes.draw do
   get '/about', to: "about#index", as: 'about'
   get '/contact', to: "contact#index", as: 'contact'
 
+  get '/checkout/address', to:'checkout#address', as:'checkout_address'
+  post '/checkout/address/update', to:'checkout#address_update', as: 'checkout_address_update'
+  get 'checkout/stripe', to: 'checkout#stripe', as: 'checkout_stripe'
+  get '/checkout', to: 'checkout#index', as: 'checkout'
   devise_for :accounts
 end
