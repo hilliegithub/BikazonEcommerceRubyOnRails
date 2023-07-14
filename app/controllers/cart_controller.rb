@@ -15,10 +15,10 @@ class CartController < ApplicationController
     qty = params[:quantity_param].to_i
     id = params[:id].to_i
 
-    # Check if the value is equal to zero. If so, remove the item from the cart.
-    session[:cart].delete_if { |a| a['id'] == id && qty == 0 }
+    cart = session[:cart].select { |a| a['id'] != id }
+    session[:cart] = cart
 
-    # Otherwise, check if the value is different from what is already in the cart, and update accordingly.
+    # Check if the value is different from what is already in the cart, and update accordingly.
     existing_item = session[:cart].find { |a| a['id'] == id }
     if existing_item
       existing_item['qty'] = qty
@@ -27,8 +27,10 @@ class CartController < ApplicationController
       session[:cart] << new_item
     end
 
-    puts session[:cart]
+    # Remove the item from the cart if the quantity becomes zero
+    session[:cart].delete_if { |a| a['id'] == id && a['qty'] == 0 }
 
     redirect_to cart_path
   end
+
 end
