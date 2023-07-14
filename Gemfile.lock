@@ -246,6 +246,7 @@ GEM
     sqlite3 (1.6.3-arm64-darwin)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
+    stripe (8.6.0)
     thor (1.2.2)
     timeout (0.4.0)
     turbo-rails (1.4.0)
@@ -293,6 +294,7 @@ DEPENDENCIES
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
+  stripe (~> 8.6)
   turbo-rails
   tzinfo-data
   web-console
