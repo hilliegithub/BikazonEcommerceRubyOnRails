@@ -25,6 +25,8 @@
     Estimated Total: <%= number_to_currency(@estimated, precision: 2) %>
 </p>
 
-<p>
-    <%= link_to 'Place Order', checkout_path %>
-</p>
+<div data-turbo='false'>
+<%= form_with url: checkout_path do |f| %>
+    <%= f.submit 'Place Order' %>
+<% end %>
+</div>

@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   get '/checkout/address', to:'checkout#address', as:'checkout_address'
   post '/checkout/address/update', to:'checkout#address_update', as: 'checkout_address_update'
   get 'checkout/stripe', to: 'checkout#stripe', as: 'checkout_stripe'
-  get '/checkout', to: 'checkout#index', as: 'checkout'
+  post '/checkout', to: 'checkout#index', as: 'checkout'
+
+  get '/success', to: 'checkout#success'
+  get '/cancel', to: 'checkout#cancel'
   devise_for :accounts
 end

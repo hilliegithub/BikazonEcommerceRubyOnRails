@@ -26,5 +26,5 @@
     <%= button_to "logout", destroy_account_session_path, method: :delete %>
     <%# <p><%= current_account.email </p> %>
 <% else %>
-    <%= button_to "login", new_account_session_path %>
+    <%= link_to "login", new_account_session_path %>
 <% end %>

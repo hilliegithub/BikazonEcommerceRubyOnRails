@@ -37,6 +37,9 @@ gem "devise"
 
 gem "stripe", "~> 8.6"
 
+gem 'dotenv-rails', require: 'dotenv/rails-now'
+
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
