@@ -6,6 +6,10 @@ class CheckoutController < ApplicationController
     #
 
     def index
+        # If cart is empty just return
+        if @cart.length == 0
+            redirect_to cart_path
+        end
         # Check If the user is logged in.
         if account_signed_in?
             # If they are logged in, Check If they have an address on file
@@ -13,8 +17,12 @@ class CheckoutController < ApplicationController
             puts @account.inspect
             if @account.primaryaddressstreet.present?
                 address = @account.primaryaddressstreet
+                postalcode = @account.primarypostalcode
+                province = @account.primary_province_id#Province.find(@account.primary_province_id).provincename
             elsif @account.secondaryaddressstreet.present?
                 address = @account.secondaryaddressstreet
+                postalcode = @account.secondarypostalcode
+                province = @account.secondary_province_id#Province.find(@account.secondary_province_id).provincename
             else
                 address = nil
             end
@@ -34,37 +42,85 @@ class CheckoutController < ApplicationController
                 #redirect_to checkout_address_path
                 render :address
                 return
-            # else
-            #     # No logged in user but has entered address send to stripe action
-            #     redirect_to checkout_stripe_path
+                # else
+                #     # No logged in user but has entered address send to stripe action
+                #     redirect_to checkout_stripe_path
             end
         end
-        # generate Stripe session and send customer
-        session = Stripe::Checkout::Session.create({
-            line_items: [{
 
-              price_data: {
-                currency: 'CAD',
-                unit_amount: 1000,
-                product_data: {
-                    name: '___product_name',
-                    description: 'Description',
-                    #images: 'image_url,
-                    metadata: {
-                        account_id: '1',
-                        product_id: '141'
+        if !account_signed_in?
+            address = session[:addressstreet]
+            postalcode = session[:postalcode]
+            province = session[:province_id]#Province.find(session[:province_id]).provincename
+        end
+
+        # Setup details to charge customer for
+        currency = 'CAD'
+        data = @cart.map { |cartitem|
+            product = Product.find(cartitem['id'])
+            purchaseitem = {
+                currency: currency,
+                unit_amount: (product.price * 100).to_i,
+                name: product.productname,
+                description: product.description,
+                quantity: cartitem['qty'],
+                id: cartitem['id']
+            }
+        }
+
+        total_sum = data.reduce(0) do |sum, item|
+            sum + item[:unit_amount] * item[:quantity]
+        end
+        puts total_sum
+        p = Province.find(province)
+        tax = {
+            currency: currency,
+            unit_amount: ((total_sum * (p.pst + p.gst + p.hst))/100).to_i,
+            name: p.provincename + ' Tax',
+            description: p.taxtype,
+            quantity: 1,
+            id: 0
+        }
+        data << tax
+
+        puts data
+        console
+        #debugger
+        #generate Stripe session and send customer
+        session = Stripe::Checkout::Session.create({
+            line_items: [
+                data.map do |d|
+                    {
+                    price_data: {
+                        currency: d[:currency],
+                        unit_amount: d[:unit_amount],
+                        product_data: {
+                            name: d[:name],
+                            description: d[:description],
+                            #images: 'image_url,
+                            metadata: {
+                                product_id: d[:id]
+                                }
+                            }
+                        },
+                    quantity: d[:quantity]
                     }
-                }
-              },
-              quantity: 1
-            }],
+
+                end
+        ],
             mode: 'payment',
-            customer_email: 'test@email.com',#@account.email,
-            success_url: 'https://b118-50-71-183-113.ngrok-free.app/success?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url: 'https://b118-50-71-183-113.ngrok-free.app/cancel.html',
+            success_url: 'https://fdb0-50-71-183-113.ngrok-free.app/success?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url: 'https://fdb0-50-71-183-113.ngrok-free.app/cancel.html',
+            metadata: {
+                address: address,
+                postalcode: postalcode,
+                province: Province.find(province).provincename,
+                account_id: account_signed_in? ? current_account.id : 'N/A',
+            },
+            customer_email: account_signed_in? ? @account.email : nil
           })
          puts session.inspect
-        #  redirect_to session.url, allow_other_host: true, status: 303
+         redirect_to session.url, allow_other_host: true, status: 303
     end
 
     def address_update
