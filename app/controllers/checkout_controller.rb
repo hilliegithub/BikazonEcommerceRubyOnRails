@@ -60,12 +60,11 @@ class CheckoutController < ApplicationController
             }],
             mode: 'payment',
             customer_email: 'test@email.com',#@account.email,
-            success_url: 'https://b118-50-71-183-113.ngrok-free.app/success.html',
+            success_url: 'https://b118-50-71-183-113.ngrok-free.app/success?session_id={CHECKOUT_SESSION_ID}',
             cancel_url: 'https://b118-50-71-183-113.ngrok-free.app/cancel.html',
-            # success_url: 'https://b118-50-71-183-113.ngrok-free.app/success.html',
-            # cancel_url: 'https://b118-50-71-183-113.ngrok-free.app/cancel.html',
           })
-          redirect_to session.url, allow_other_host: true, status: 303
+         puts session.inspect
+        #  redirect_to session.url, allow_other_host: true, status: 303
     end
 
     def address_update
@@ -82,11 +81,15 @@ class CheckoutController < ApplicationController
             session[:postalcode] ||= params["postalcode"]
             session[:province_id] ||= params["primary_province_id"]
         end
-        redirect_to checkout_path
+        redirect_to cart_path
     end
 
     def success
+        if !params[:session_id].nil?
+            session = Stripe::Checkout::Session.retrieve(params[:session_id])
+            customer = Stripe::Customer.retrieve(session.customer)
 
+        end
     end
 
     def cancel

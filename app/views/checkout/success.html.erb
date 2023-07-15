@@ -1,4 +1,48 @@
-<h1> Successfully purchased </h1>
-<p>
-    <%= params.inspect %>
-</p>
+<h1> Thanks for your order! We here at Bikazon really appreciate your support! </h1>
+<h3>Here's a summary of your order:</h3>
+        <table>
+            <tr>
+                <td colspan="4"><h3>Address Information</h3></td>
+            </tr>
+            <tr>
+                <td class="alignright"><span class="bold">Address:</span></td>
+                <td>LIMESYDE</td>
+                <td class="alignright"><span class="bold">City:</span></td>
+                <td>WINNIPEG</td>
+            </tr>
+            <tr>
+                <td class="alignright"><span class="bold">Province:</span></td>
+                <td>MANITOBA</td>
+                <td class="alignright"><span class="bold">Postal Code:</span></td>
+                <td>RA3 RA3</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="alignright"><span class="bold">Email:</span></td>
+                <td colspan="2"><!--<a class="eml-protected" href="#"><?= $email?></a>-->
+                <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="<?=$email?>"></a>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td colspan="3"><h3>Order Information</h3></td>
+            </tr>
+            <tr>
+                <td><span class="bold">Quantity</span></td>
+                <td><span class="bold">Description</span></td>
+                <td><span class="bold">Cost</span></td>
+            </tr>
+            <?php foreach($products as $each => $detail):?>
+                <?php if ( filter_var($detail['quantity'],FILTER_VALIDATE_INT, ["options" => ["min_range" => 1]] ) !== false ): ?>
+                <tr>
+                    <td><?=$detail['quantity']?></td>
+                    <td><?=$each?></td>
+                    <td><?=$detail['price']* $detail['quantity'] ?></td>
+                </tr>
+                <?php endif ?>
+            <?php endforeach ?>
+            <tr>
+                <td colspan="2" class='alignright'><span class="bold">Totals</span></td>
+                <td class='alignright'><span class="bold"><?=(float)$total?></span></td>
+            </tr>
+        </table>
