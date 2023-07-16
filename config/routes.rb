@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  root "home#index"
+  # Defines the root path route ('/')
+  root 'home#index'
   get '/categories/:id', to: 'categories#show', as: 'category'
   get '/products/:id', to: 'products#show', as: 'product'
 
@@ -12,17 +12,18 @@ Rails.application.routes.draw do
 
   get '/cart', to: 'cart#index', as: 'cart'
   put '/cart', to: 'cart#update', as: 'update_cart'
-  post '/cart/remove', to: 'cart#remove', as: 'remove_on_cart'
+  #post '/cart/remove', to: 'cart#remove', as: 'remove_on_cart'
   delete 'cart/remove_from_cart', to: 'cart#remove_from_cart', as: 'remove_from_cart'
-  #delete 'products/remove_from_cart/:id', to: 'products#remove_from_cart', as: 'remove_from_cart'
-  get '/search', to: "search#index"
 
-  get '/account/:id', to: "account#show", as: 'account'
-  get '/account/:id/edit', to: "account#edit", as: 'account_edit'
-  patch '/account/:id/edit', to: "account#update", as: 'account_update'
-  #resource :contact, only: [:show]
-  get '/about', to: "about#index", as: 'about'
-  get '/contact', to: "contact#index", as: 'contact'
+  get '/search', to: 'search#index'
+
+  get '/account/:id', to: 'account#show', as: 'account'
+  get '/account/:id/edit', to: 'account#edit', as: 'account_edit'
+  patch '/account/:id/edit', to: 'account#update', as: 'account_update'
+  get '/account/:id/orders', to: 'account#get_orders', as: 'account_orders'
+
+  get '/about', to: 'about#index', as: 'about'
+  get '/contact', to: 'contact#index', as: 'contact'
 
   get '/checkout/address', to:'checkout#address', as:'checkout_address'
   post '/checkout/address/update', to:'checkout#address_update', as: 'checkout_address_update'
