@@ -109,17 +109,19 @@ class CheckoutController < ApplicationController
                 end
         ],
             mode: 'payment',
-            success_url: 'https://fdb0-50-71-183-113.ngrok-free.app/success?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url: 'https://fdb0-50-71-183-113.ngrok-free.app/cancel.html',
+            success_url: "#{ENV['NGROK']}/success?session_id={CHECKOUT_SESSION_ID}",
+            cancel_url: "#{ENV['NGROK']}/cancel.html",
             metadata: {
                 address: address,
                 postalcode: postalcode,
                 province: Province.find(province).provincename,
-                account_id: account_signed_in? ? current_account.id : 'N/A',
+                cart: @cart.to_json,
+                account_id: account_signed_in? ? current_account.id.to_s : 'N/A',
             },
             customer_email: account_signed_in? ? @account.email : nil
           })
          puts session.inspect
+         #debugger
          redirect_to session.url, allow_other_host: true, status: 303
     end
 
@@ -143,13 +145,59 @@ class CheckoutController < ApplicationController
     def success
         if !params[:session_id].nil?
             session = Stripe::Checkout::Session.retrieve(params[:session_id])
-            customer = Stripe::Customer.retrieve(session.customer)
+            puts session.inspect
+            #puts session["metadata"]
+            puts session[:metadata]
+            puts session["metadata"]["cart"]
+            @purchased =  JSON.parse(session["metadata"]["cart"])
 
+
+            province = Province.where(provincename: session[:metadata][:province]).take
+            #Create an Order Record
+            order = Order.new(
+                paymentmethod: session[:payment_method_types][0],
+                shippingAddress: session[:metadata][:address] + ' ' + session[:metadata][:postalcode] + ' ' + session[:metadata][:province],
+                status: "processing",
+                pst: province.pst,
+                gst: province.gst,
+                hst: province.hst,
+                account_id: session[:metadata][:account_id] == "N/A" ? nil : Account.find(session[:metadata][:account_id].to_i).id
+            )
+            puts order.inspect
+            @oorder = order
+            # order.save
+
+            # Update the products table with amount in stock
+            @purchased.each do |item|
+                prod = Product.find(item["id"])
+                puts "Amount in Stock " + prod.amountinstock.to_s
+                puts "Amount in Stock - qty purchased " + (prod.amountinstock - item["qty"]).to_s
+                prod.amountinstock = prod.amountinstock - 2
+
+                # Create OrderItems For each item
+                orderitem = OrderItem.new(
+                    price: prod.price,
+                    quantity: item["qty"],#.to_i
+                    order_id: order.id,
+                    product_id: prod.id,
+                )
+                puts orderitem.inspect
+                @oorderitem = orderitem
+                #orderitem.save
+            end
+
+
+            console
+            #customer = Stripe::Customer.retrieve(session.customer)
+
+
+            # Expire the stripe checkout session
         end
     end
 
     def cancel
 
+        # Expire the stripe checkout session
     end
 
 

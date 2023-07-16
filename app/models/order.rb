@@ -2,7 +2,7 @@ class Order < ApplicationRecord
   belongs_to :account
   has_many :order_items
 
-  validates :orderdate, presence: true
+  #validates :orderdate, presence: true
   validates :shippingAddress, presence: true
   validates :paymentmethod, presence: true
   validates :status, presence: true

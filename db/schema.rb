@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_12_135611) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_16_003732) do
   create_table "abouts", force: :cascade do |t|
     t.string "title"
     t.text "body"
@@ -120,7 +120,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_135611) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.date "orderdate"
     t.string "shippingAddress"
     t.string "paymentmethod"
     t.string "status"
