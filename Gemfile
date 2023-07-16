@@ -39,6 +39,8 @@ gem "stripe", "~> 8.6"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 
+gem "kaminari"
+
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
