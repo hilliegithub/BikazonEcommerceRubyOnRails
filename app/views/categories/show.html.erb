@@ -3,6 +3,7 @@
     <%= @category.categoryname %>
 </p>
 
-<% @category.products.each do |product| %>
+<%= paginate @products %>
+<% @products.each do |product| %>
     <p><%= link_to product.productname, product_path(product) %></p>
 <% end %>
