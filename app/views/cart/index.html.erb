@@ -25,8 +25,20 @@
 </ul>
 
 <p>
-    Estimated Total: <%= number_to_currency(@estimated, precision: 2) %>
+    Total Before Tax: <%= number_to_currency(@estimated, precision: 2) %>
 </p>
+<% if @taxprovince.nil? %>
+    <p>
+        You must provide your address before final price can be determined. Select place order and enter your address.
+    </p>
+<% else %>
+    <p>
+        Tax: <%= number_to_currency(@tax, precision: 2) %>
+    </p>
+    <p>
+        Estimated Total: <%= number_to_currency(@estimated + @tax, precision: 2) %>
+    </p>
+<% end %>
 
 <div data-turbo='false'>
 <%= form_with url: checkout_path do |f| %>

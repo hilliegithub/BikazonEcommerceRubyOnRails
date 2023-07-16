@@ -6,8 +6,33 @@ class CartController < ApplicationController
     @cart.each do |item|
       @estimated += (item['qty'] * (@products.select {|p| p.id == item['id']}).first.price)
     end
-    puts @cart.inspect
-    puts @estimated.inspect
+
+    # If the signed in user has no primary or secondary address on file
+    if account_signed_in?
+      user = Account.find(current_account.id)
+      if user.primary_province_id.present?
+        @taxprovince = user.primary_province_id
+      elsif user.secondary_province_id.present?
+        @taxprovince = user.secondary_province_id
+      else
+        @taxprovince = nil
+      end
+    else
+      if session[:province_id].present?
+        @taxprovince = session[:province_id]
+      else
+        @taxprovince = nil
+      end
+    end
+
+    # IF province is avaliable calculate the tax and display
+    if !@taxprovince.nil?
+      p = Province.find(@taxprovince)
+      @tax = ((@estimated * (p.pst + p.gst + p.hst))/100)
+    end
+
+    #puts @cart.inspect
+    #puts @estimated.inspect
   end
 
   def update
@@ -44,6 +69,6 @@ class CartController < ApplicationController
     elsif returnto == 'C'
       redirect_to cart_path
     end
-end
+  end
 
 end
