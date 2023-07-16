@@ -16,6 +16,9 @@
             <p>
                 <%= button_to 'update', update_cart_path, params: { id: item['id'] }, method: :put %>
             </p>
+            <p>
+                <%= button_to 'remove', remove_from_cart_path, params: { id: item['id'], where: 'C' }, method: :delete %>
+            </p>
         </form>
     </li>
 <% end %>

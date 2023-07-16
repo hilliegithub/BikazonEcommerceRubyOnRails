@@ -33,4 +33,17 @@ class CartController < ApplicationController
     redirect_to cart_path
   end
 
+  def remove_from_cart
+    id = params[:id].to_i
+    returnto = params[:where]
+    puts returnto
+    cartitem = session[:cart].delete_if { |a| a['id'] == id}
+
+    if returnto == 'P'
+      redirect_to root_path
+    elsif returnto == 'C'
+      redirect_to cart_path
+    end
+end
+
 end

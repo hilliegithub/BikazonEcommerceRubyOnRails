@@ -9,7 +9,7 @@
     <%= number_to_currency @product.price %>
 </p>
 <% if @cart.any? do |cartitem| cartitem['id'] == @product.id end %>
-    <%= button_to 'remove from cart', remove_from_cart_path(@product), method: :delete %>
+    <%= button_to 'remove from cart', remove_from_cart_path, params: { id: @product.id, where: 'P' }, method: :delete %>
 <% else %>
 <form action="<%= add_to_cart_path %>" method="post">
     <p>

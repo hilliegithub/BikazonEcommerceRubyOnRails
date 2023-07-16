@@ -9,10 +9,12 @@ Rails.application.routes.draw do
   get '/products/:id', to: 'products#show', as: 'product'
 
   post 'products/add_to_cart', to: 'products#add_to_cart', as: 'add_to_cart'
-  delete 'products/remove_from_cart/:id', to: 'products#remove_from_cart', as: 'remove_from_cart'
 
   get '/cart', to: 'cart#index', as: 'cart'
   put '/cart', to: 'cart#update', as: 'update_cart'
+  post '/cart/remove', to: 'cart#remove', as: 'remove_on_cart'
+  delete 'cart/remove_from_cart', to: 'cart#remove_from_cart', as: 'remove_from_cart'
+  #delete 'products/remove_from_cart/:id', to: 'products#remove_from_cart', as: 'remove_from_cart'
   get '/search', to: "search#index"
 
   get '/account/:id', to: "account#show", as: 'account'
