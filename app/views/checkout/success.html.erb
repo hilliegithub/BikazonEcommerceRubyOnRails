@@ -9,43 +9,41 @@
             </tr>
             <tr>
                 <td class="alignright"><span class="bold">Address:</span></td>
-                <td>LIMESYDE</td>
-                <td class="alignright"><span class="bold">City:</span></td>
-                <td>WINNIPEG</td>
+                <td><%= @buyer[:address] %></td>
+                <td class="alignright"><span class="bold">Postal Code:</span></td>
+                <td><%= @buyer[:postalcode] %></td>
             </tr>
             <tr>
                 <td class="alignright"><span class="bold">Province:</span></td>
-                <td>MANITOBA</td>
-                <td class="alignright"><span class="bold">Postal Code:</span></td>
-                <td>RA3 RA3</td>
+                <td><%= @buyer[:province] %></td>
+                <td class="alignright"><span class="bold">View Your Invoice</span></td>
+                <td><a href="<%= #@buyer[:invoice_url] %>" >invoice</a></td>
             </tr>
             <tr>
                 <td colspan="2" class="alignright"><span class="bold">Email:</span></td>
-                <td colspan="2"><!--<a class="eml-protected" href="#"><?= $email?></a>-->
-                <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="<?=$email?>"></a>
+                <td colspan="2">
+                    <%= @buyer[:email] %>
                 </td>
             </tr>
         </table>
         <table>
             <tr>
-                <td colspan="3"><h3>Order Information</h3></td>
+                <td colspan="3"><h3>Order Details</h3></td>
             </tr>
             <tr>
                 <td><span class="bold">Quantity</span></td>
                 <td><span class="bold">Description</span></td>
                 <td><span class="bold">Cost</span></td>
             </tr>
-            <?php foreach($products as $each => $detail):?>
-                <?php if ( filter_var($detail['quantity'],FILTER_VALIDATE_INT, ["options" => ["min_range" => 1]] ) !== false ): ?>
+            <% @oorderitem.each do |orderitem| %>
                 <tr>
-                    <td><?=$detail['quantity']?></td>
-                    <td><?=$each?></td>
-                    <td><?=$detail['price']* $detail['quantity'] ?></td>
+                    <td><%= orderitem.quantity %></td>
+                    <td><%= Product.find(orderitem.product_id).productname %></td>
+                    <td><%= orderitem.price %></td>
                 </tr>
-                <?php endif ?>
-            <?php endforeach ?>
+            <% end %>
             <tr>
                 <td colspan="2" class='alignright'><span class="bold">Totals</span></td>
-                <td class='alignright'><span class="bold"><?=(float)$total?></span></td>
+                <td class='alignright'><span class="bold"><%= @total %></span></td>
             </tr>
         </table>

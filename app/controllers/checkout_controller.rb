@@ -68,14 +68,14 @@ class CheckoutController < ApplicationController
             }
         }
 
-        total_sum = data.reduce(0) do |sum, item|
+        total_tax = data.reduce(0) do |sum, item|
             sum + item[:unit_amount] * item[:quantity]
         end
-        puts total_sum
+        #puts total_sum
         p = Province.find(province)
         tax = {
             currency: currency,
-            unit_amount: ((total_sum * (p.pst + p.gst + p.hst))/100).to_i,
+            unit_amount: ((total_tax * (p.pst + p.gst + p.hst))/100).to_i,
             name: p.provincename + ' Tax',
             description: p.taxtype,
             quantity: 1,
@@ -147,11 +147,19 @@ class CheckoutController < ApplicationController
             session = Stripe::Checkout::Session.retrieve(params[:session_id])
             puts session.inspect
             #puts session["metadata"]
-            puts session[:metadata]
-            puts session["metadata"]["cart"]
+            #puts session[:metadata]
+            #puts session["metadata"]["cart"]
+            console
             @purchased =  JSON.parse(session["metadata"]["cart"])
-
-
+            @total = session["amount_total"].to_d
+            @buyer = {
+                address: session[:metadata][:address],
+                postalcode: session[:metadata][:postalcode],
+                province: session[:metadata][:province],
+                invoice_url: session[:url],
+                email: session[:metadata][:account_id] == "N/A" ? session[:customer_details][:email] : Account.find(session[:metadata][:account_id].to_i).email
+            }
+            puts @buyer.inspect
             province = Province.where(provincename: session[:metadata][:province]).take
             #Create an Order Record
             order = Order.new(
@@ -168,10 +176,11 @@ class CheckoutController < ApplicationController
             # order.save
 
             # Update the products table with amount in stock
+            @oorderitem = []
             @purchased.each do |item|
                 prod = Product.find(item["id"])
-                puts "Amount in Stock " + prod.amountinstock.to_s
-                puts "Amount in Stock - qty purchased " + (prod.amountinstock - item["qty"]).to_s
+                #puts "Amount in Stock " + prod.amountinstock.to_s
+                #puts "Amount in Stock - qty purchased " + (prod.amountinstock - item["qty"]).to_s
                 prod.amountinstock = prod.amountinstock - 2
 
                 # Create OrderItems For each item
@@ -182,14 +191,10 @@ class CheckoutController < ApplicationController
                     product_id: prod.id,
                 )
                 puts orderitem.inspect
-                @oorderitem = orderitem
+                @oorderitem << orderitem
                 #orderitem.save
+                #prod.save
             end
-
-
-            console
-            #customer = Stripe::Customer.retrieve(session.customer)
-
 
             # Expire the stripe checkout session
         end
