@@ -145,18 +145,17 @@ class CheckoutController < ApplicationController
     def success
         if !params[:session_id].nil?
             session = Stripe::Checkout::Session.retrieve(params[:session_id])
+            payment_intent = Stripe::PaymentIntent.retrieve(session["payment_intent"])
+            charge = Stripe::Charge.retrieve(payment_intent['latest_charge'])
             puts session.inspect
-            #puts session["metadata"]
-            #puts session[:metadata]
-            #puts session["metadata"]["cart"]
-            console
-            @purchased =  JSON.parse(session["metadata"]["cart"])
+
+            @purchased = JSON.parse(session["metadata"]["cart"])
             @total = session["amount_total"].to_d
             @buyer = {
                 address: session[:metadata][:address],
                 postalcode: session[:metadata][:postalcode],
                 province: session[:metadata][:province],
-                invoice_url: session[:url],
+                invoice_url: charge['receipt_url'],
                 email: session[:metadata][:account_id] == "N/A" ? session[:customer_details][:email] : Account.find(session[:metadata][:account_id].to_i).email
             }
             puts @buyer.inspect
@@ -165,35 +164,33 @@ class CheckoutController < ApplicationController
             order = Order.new(
                 paymentmethod: session[:payment_method_types][0],
                 shippingAddress: session[:metadata][:address] + ' ' + session[:metadata][:postalcode] + ' ' + session[:metadata][:province],
-                status: "processing",
+                status: 'processing',
                 pst: province.pst,
                 gst: province.gst,
                 hst: province.hst,
-                account_id: session[:metadata][:account_id] == "N/A" ? nil : Account.find(session[:metadata][:account_id].to_i).id
+                account_id: session[:metadata][:account_id] == 'N/A' ? nil : Account.find(session[:metadata][:account_id].to_i).id
             )
             puts order.inspect
             @oorder = order
-            # order.save
+            order.save
 
             # Update the products table with amount in stock
             @oorderitem = []
             @purchased.each do |item|
-                prod = Product.find(item["id"])
-                #puts "Amount in Stock " + prod.amountinstock.to_s
-                #puts "Amount in Stock - qty purchased " + (prod.amountinstock - item["qty"]).to_s
+                prod = Product.find(item['id'])
                 prod.amountinstock = prod.amountinstock - 2
 
                 # Create OrderItems For each item
                 orderitem = OrderItem.new(
                     price: prod.price,
-                    quantity: item["qty"],#.to_i
+                    quantity: item['qty'],#.to_i
                     order_id: order.id,
-                    product_id: prod.id,
-                )
+                    product_id: prod.id
+                    )
                 puts orderitem.inspect
                 @oorderitem << orderitem
-                #orderitem.save
-                #prod.save
+                orderitem.save
+                prod.save
             end
 
             # Expire the stripe checkout session

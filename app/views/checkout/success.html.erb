@@ -1,8 +1,5 @@
 <h1> Thanks for your order! We here at Bikazon really appreciate your support! </h1>
 <h3>Here's a summary of your order:</h3>
-<%= @purchased.inspect %>
-<%= @oorder.inspect %>
-<%= @oorderitem.inspect %>
         <table>
             <tr>
                 <td colspan="4"><h3>Address Information</h3></td>
@@ -16,14 +13,12 @@
             <tr>
                 <td class="alignright"><span class="bold">Province:</span></td>
                 <td><%= @buyer[:province] %></td>
-                <td class="alignright"><span class="bold">View Your Invoice</span></td>
-                <td><a href="<%= #@buyer[:invoice_url] %>" >invoice</a></td>
+                <td colspan="2" class="alignright"><span class="bold">Email:</span></td>
+                <td colspan="2"><%= @buyer[:email] %></td>
             </tr>
             <tr>
-                <td colspan="2" class="alignright"><span class="bold">Email:</span></td>
-                <td colspan="2">
-                    <%= @buyer[:email] %>
-                </td>
+                <td class="alignright"><span class="bold">View Your Invoice</span></td>
+                <td><a href="<%= @buyer[:invoice_url] %>" target="_blank" rel="noopener noreferrer" >invoice</a></td>
             </tr>
         </table>
         <table>
@@ -43,7 +38,8 @@
                 </tr>
             <% end %>
             <tr>
-                <td colspan="2" class='alignright'><span class="bold">Totals</span></td>
+                <td></td>
+                <td class='alignright'><span class="bold">Totals</span></td>
                 <td class='alignright'><span class="bold"><%= @total %></span></td>
             </tr>
         </table>
