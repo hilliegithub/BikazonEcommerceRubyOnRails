@@ -21,7 +21,7 @@ ActiveAdmin.register Product do
     column :price
     column :amountinstock
     column "Category" do |product|
-      product.category.categoryname
+      link_to product.category.categoryname, admin_category_path(product.category)
     end
     column :description
     column  "Images" do |product|
@@ -38,10 +38,12 @@ ActiveAdmin.register Product do
     attributes_table do
       row :id
       row :productname
-      row :price
+      row 'Price' do |product|
+          number_to_currency(product.price)
+      end
       row :amountinstock
       row "Category" do |product|
-        product.category.categoryname
+        link_to product.category.categoryname, admin_category_path(product.category)
       end
       row :description
       row "Images" do |product|
@@ -64,12 +66,15 @@ ActiveAdmin.register Product do
     end
 
     f.inputs "Images" do
-        f.object.images.each do |image|
-          f.input :_destroy, as: :boolean, label: "Delete", wrapper_html: { class: "delete-checkbox" }, input_html: { checked: false }
-          f.input :images, as: :file, :hint => image_tag(image.variant(resize_to_limit: [100,100]))
-              end
-            #f.input :images, as: :file, input_html: { multiple: true }
-        end
+
+      f.object.images.each do |image|
+        #f.input :images, :hint => (link_to 'Home test', product_purge_path, params: {image: image})
+        f.input :_destroy, as: :boolean, hint: image_tag(image.variant(resize_to_limit: [100,100]))
+      end
+
+        f.input :images, as: :file, input_html: { multiple: true }
+      end
       f.actions
-    end
+  end # End of Form
+
 end
