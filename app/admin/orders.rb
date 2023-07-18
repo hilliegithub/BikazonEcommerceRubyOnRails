@@ -61,7 +61,7 @@ ActiveAdmin.register Order do
 
   form do |f|
     f.inputs "Order Status" do
-      f.input :status
+      f.input :status, as: :select, collection: ["processing", "paid", "shipped"]
       f.input :id, as: :number, input_html: { disabled: true, value: f.object.id}
       f.input 'Payment Method', as: :string, input_html: { disabled: true, value: f.object.paymentmethod}
       f.input :account, as: :string, input_html: { disabled: true, value: f.object.account.email}
