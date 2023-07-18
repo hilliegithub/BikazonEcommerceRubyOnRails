@@ -34,6 +34,7 @@ ActiveAdmin.register Order do
       row 'Account' do |orderrow|
         link_to orderrow.account.email, admin_account_path(orderrow.account)
       end
+      row :stripe_session
       row 'Tax' do |orderrow|
         number_to_currency(((orderrow.order_items.all.reduce(0) { |sum, item| sum + item.price * item.quantity }) * (orderrow.pst + orderrow.gst + orderrow.hst))/100)
       end
@@ -65,7 +66,7 @@ ActiveAdmin.register Order do
       f.input 'Payment Method', as: :string, input_html: { disabled: true, value: f.object.paymentmethod}
       f.input :account, as: :string, input_html: { disabled: true, value: f.object.account.email}
       f.input 'Shipping Address', as: :string, input_html: { disabled: true, value: f.object.shippingAddress}
-      #f.input 'Order Total', as: :number, input_html: { disabled: true, value: }
+      #f.input 'Stripe Session ID', as: :string, input_html: { disabled: true, value: f.object }
     end
     f.actions
   end

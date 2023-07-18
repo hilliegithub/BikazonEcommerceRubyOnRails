@@ -164,10 +164,11 @@ class CheckoutController < ApplicationController
             order = Order.new(
                 paymentmethod: session[:payment_method_types][0],
                 shippingAddress: session[:metadata][:address] + ' ' + session[:metadata][:postalcode] + ' ' + session[:metadata][:province],
-                status: 'processing',
+                status: 'paid',
                 pst: province.pst,
                 gst: province.gst,
                 hst: province.hst,
+                stripe_session: session[:id],
                 account_id: session[:metadata][:account_id] == 'N/A' ? nil : Account.find(session[:metadata][:account_id].to_i).id
             )
             puts order.inspect
