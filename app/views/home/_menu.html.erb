@@ -1,4 +1,4 @@
-<div class="navbar-menu" role="navigation" aria-label="main navigation">
+<div class="navbar" role="navigation" aria-label="main navigation">
 <div class="navbar-brand">
     <a class="navbar-item is-uppercase has-text-weight-bold" href="/">
       Bikazon
@@ -10,38 +10,40 @@
     </a>
 </div>
 <div class="navbar-menu">
-<ul>
-    <li>
-        <%= link_to 'Home', root_path %>
-    </li>
-    <li>
-        <%= link_to 'View Cart', cart_path %>
-    </li>
+<div class="navbar-start">
+    <%= link_to 'Home', root_path, class: "navbar-item"  %>
+    <%= link_to 'View Cart', cart_path, class: "navbar-item"  %>
     <% if account_signed_in? %>
-    <li>
-            <%= link_to 'View Account', account_path(current_account.id)%>
-    </li>
-    <li>
-            <%= link_to 'View Orders', account_orders_path(current_account.id)%>
-    </li>
+        <%= link_to 'View Account', account_path(current_account.id), class: "navbar-item" %>
+        <%= link_to 'View Orders', account_orders_path(current_account.id), class: "navbar-item" %>
     <% end %>
-</ul>
 </div>
-
+</div class="navbar-end">
+    <div class="navbar-item is-flex">
         <%= form_with url: "/search", method: :get do |form| %>
+            <div class="field is-grouped">
+                <div class="control">
+                    <%= form.label :query, "Find Products:" %>
+                </div>
+                <div class="control">
+                    <%= form.text_field :query, class: "input is-link is-small"%>
+                </div>
+                <div class="control is-align-items-stretch">
+                    <%= form.select :category, options_for_select(["All"] + @search_categories) %>
+                </div>
+                <div class="control">
+                    <%= form.submit "Search",class: "button is-dark is-small"%>
+                </div>
+            </div>
 
-                            <%= form.label :query, "Find Products:" %>
 
-                            <%= form.text_field :query %>
-                            <%= form.select :category, options_for_select(["All"] + @search_categories) %>
-                            <%= form.submit "Search" %>
-                        </div>
-                    </div>
-                <% end %>
-<% if account_signed_in? %>
-    <%= button_to "logout", destroy_account_session_path, method: :delete %>
-    <%# <p><%= current_account.email </p> %>
-<% else %>
-    <%= link_to "login", new_account_session_path %>
-<% end %>
+
+
+        <% end %>
+        <% if account_signed_in? %>
+            <%= button_to "logout", destroy_account_session_path, method: :delete %>
+        <% else %>
+            <%= link_to "login", new_account_session_path %>
+        <% end %>
+    </div>
 </div>
