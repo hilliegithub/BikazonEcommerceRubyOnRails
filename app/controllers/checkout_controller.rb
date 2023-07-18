@@ -194,7 +194,7 @@ class CheckoutController < ApplicationController
                 prod.save
             end
 
-            # Expire the stripe checkout session
+            session[:cart] = nil
         end
     end
 

@@ -1,3 +1,15 @@
+<div class="navbar-menu" role="navigation" aria-label="main navigation">
+<div class="navbar-brand">
+    <a class="navbar-item is-uppercase has-text-weight-bold" href="/">
+      Bikazon
+    </a>
+     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="restuarantmenuitem">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+    </a>
+</div>
+<div class="navbar-menu">
 <ul>
     <li>
         <%= link_to 'Home', root_path %>
@@ -14,6 +26,7 @@
     </li>
     <% end %>
 </ul>
+</div>
 
         <%= form_with url: "/search", method: :get do |form| %>
 
@@ -31,3 +44,4 @@
 <% else %>
     <%= link_to "login", new_account_session_path %>
 <% end %>
+</div>
