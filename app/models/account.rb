@@ -9,7 +9,7 @@ class Account < ApplicationRecord
     has_many_attached :images
 
     validates :email, presence: true
-    #validates :password, confirmation: true
+    #validates :primarypostalcode,  format: { with: /\A[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d\z/, message: "Invalid postal code format" }
     validates :primarypostalcode, postal_code: true
     validates :secondarypostalcode, postal_code: true
     #devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
