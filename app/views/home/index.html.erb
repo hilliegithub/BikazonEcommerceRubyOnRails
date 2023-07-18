@@ -8,9 +8,17 @@
   </p>
 <% end %>
 
-<h2> Checkout some of our featured products </h2>
+<h2> Our Newest Products </h2>
 
-<% @products.each do |product| %>
+<% @newproducts.each do |product| %>
+  <p>
+    <%= link_to product.productname, product_path(product) %>
+  </p>
+<% end %>
+
+<h2> Recently Updated Product </h2>
+
+<% @updatedproducts.each do |product| %>
   <p>
     <%= link_to product.productname, product_path(product) %>
   </p>
