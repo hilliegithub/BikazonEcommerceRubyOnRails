@@ -2,29 +2,6 @@
 
 <section class=" mt-5">
 
-<%= paginate @products %>
-<% @products.each do |product| %>
-<article class="media">
-  <figure class="media-left">
-    <p class="image is-64x64">
-      <% if product.images.first.present? %>
-        <%= image_tag(product.images.first.variant(resize_to_limit: [100,100])) %>
-      <% else %>
-        <p>No Image</p>
-      <% end %>
-    </p>
-  </figure>
-  <div class="media-content">
-    <div class="content">
-      <p>
-        <strong><%= product.productname %></strong>
-        <br>
-        <%= product.description %>
-      </p>
-      <small><%= link_to 'Check Out', product_path(product) %></small>
-    </div>
-  </div>
-</article>
-<% end %>
+<%= render "shared/products" , products: @products %>
 
 </section>

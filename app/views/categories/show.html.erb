@@ -1,9 +1,6 @@
-<h1>Categories#show</h1>
-<p>
-    <%= @category.categoryname %>
-</p>
 
-<%= paginate @products %>
-<% @products.each do |product| %>
-    <p><%= link_to product.productname, product_path(product) %></p>
-<% end %>
+<h1 class="is-size-2 mt-6 mb-6 has-text-centered"> <%= @category.categoryname %> </h1>
+
+<section class="mt-5">
+    <%= render "shared/products" , products: @products %>
+</section>
