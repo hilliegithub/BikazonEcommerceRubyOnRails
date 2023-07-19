@@ -1,4 +1,8 @@
 class ProductsController < ApplicationController
+  def index
+    @products = Product.all
+  end
+
   def show
     @product = Product.find(params[:id])
   end
@@ -15,12 +19,5 @@ class ProductsController < ApplicationController
       redirect_to root_path
     end
 
-  #   def remove_from_cart
-  #     id = params[:id].to_i
-  #     cartitem = session[:cart].delete_if { |a| a['id'] == id}
-  #     #puts cartitem
-  #     #session[:cart].delete(cartitem)
-  #     redirect_to root_path
-  # end
 end
 
