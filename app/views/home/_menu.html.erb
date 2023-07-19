@@ -1,49 +1,61 @@
-<div class="navbar" role="navigation" aria-label="main navigation">
-<div class="navbar-brand">
-    <a class="navbar-item is-uppercase has-text-weight-bold" href="/">
-      Bikazon
-    </a>
-     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="restuarantmenuitem">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-    </a>
-</div>
-<div class="navbar-menu">
-<div class="navbar-start">
-    <%= link_to 'Home', root_path, class: "navbar-item"  %>
-    <%= link_to 'View Cart', cart_path, class: "navbar-item"  %>
-    <% if account_signed_in? %>
-        <%= link_to 'View Account', account_path(current_account.id), class: "navbar-item" %>
-        <%= link_to 'View Orders', account_orders_path(current_account.id), class: "navbar-item" %>
-    <% end %>
-</div>
-</div class="navbar-end">
-    <div class="navbar-item is-flex">
-        <%= form_with url: "/search", method: :get do |form| %>
-            <div class="field is-grouped">
-                <div class="control">
-                    <%= form.label :query, "Find Products:" %>
-                </div>
-                <div class="control">
-                    <%= form.text_field :query, class: "input is-link is-small"%>
-                </div>
-                <div class="control is-align-items-stretch">
-                    <%= form.select :category, options_for_select(["All"] + @search_categories) %>
-                </div>
-                <div class="control">
-                    <%= form.submit "Search",class: "button is-dark is-small"%>
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+    <div class="container">
+    <div class="navbar-brand">
+        <a class="navbar-item is-uppercase has-text-weight-bold" href="/">
+        Bikazon
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="menuitem">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="menuitem" class="navbar-menu">
+        <div class="navbar-start">
+            <div class="navbar-item">
+                <%= link_to 'Home', root_path, class: "navbar-item"  %>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">Account</a>
+                    <div class="navbar-dropdown">
+                        <%= link_to 'View Cart', cart_path, class: "navbar-item"%>
+                        <% if account_signed_in? %>
+                            <%= link_to 'View Account', account_path(current_account.id), class: "navbar-item" %>
+                            <%= link_to 'View Orders', account_orders_path(current_account.id), class: "navbar-item" %>
+                        <% end %>
+                    </div>
                 </div>
             </div>
+        </div>
 
+        <div class="navbar-end">
+            <div class="navbar-item is-flex">
+                <%= form_with url: "/search", method: :get do |form| %>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <%= form.label :query, "Find Products:" %>
+                        </div>
+                        <div class="control">
+                            <%= form.text_field :query, class: "input is-link is-small"%>
+                        </div>
+                        <div class="control is-align-items-stretch">
+                            <%= form.select :category, options_for_select(["All"] + @search_categories) %>
+                        </div>
+                        <div class="control">
+                            <%= form.submit "Search",class: "button is-dark is-small"%>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
 
-
-
-        <% end %>
-        <% if account_signed_in? %>
-            <%= button_to "logout", destroy_account_session_path, method: :delete %>
-        <% else %>
-            <%= link_to "login", new_account_session_path %>
-        <% end %>
+            <div class="navbar-item">
+                <% if account_signed_in? %>
+                    <%= button_to "Logout", destroy_account_session_path, method: :delete, class: "button is-dark is-small" %>
+                <% else %>
+                    <%= link_to "Login", new_account_session_path, class: "button" %>
+                <% end %>
+            </div>
+        </div>
     </div>
-</div>
+    </div>
+</nav>

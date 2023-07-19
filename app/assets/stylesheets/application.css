@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+.card-fixed-size {
+    width: 300px;
+    height: 400px;
+}

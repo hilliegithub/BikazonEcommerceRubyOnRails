@@ -1,25 +1,85 @@
-<h1>Home#index</h1>
-<p><%= debug session[:cart] %></p>
+
+ <section class="hero is-link">
+    <div class="hero-body">
+
+<p class="title">Welcome to Bikazon</p>
+<p>Your premier destination for motorcycles and accessories in Winnipeg! With over 30 years of experience,
+we take pride in delivering world-renowned, high-quality motorcycles to our passionate community of riders. Our dedicated team of 50 skilled staff members,
+including salespeople, mechanics, administrative staff, and customer service representatives,
+is committed to ensuring your satisfaction.</p>
+<br>
+<p>
+  Since 1993, Bikazon has been a trusted name in the motorcycle industry,
+  known for our expertise and exceptional customer service. We offer a diverse range of motorcycles from leading manufacturers,
+  including sport bikes, cruisers, touring bikes, and off-road motorcycles. Additionally, we provide an extensive selection of motorcycle parts,
+  accessories, safety gear, and apparel, carefully curated to meet the needs and preferences of motorcycle enthusiasts like you.
+</p>
+<br>
+<p>
+  Our physical showroom, strategically located in Winnipeg,
+  invites you to explore our wide range of motorcycles on display. Our knowledgeable staff is always ready to assist you,
+  offering personalized customer service and expert advice to help you find the perfect motorcycle for your needs.
+  We understand that each rider is unique, and our goal is to ensure your buying experience is exceptional.
+</p>
+<br>
+<p>
+  In addition to motorcycles, Bikazon also offers a wide array of motorcycle parts, accessories, safety gear,
+  and apparel. We carefully choose our products to ensure they meet the highest standards of quality,
+  allowing riders to fully enjoy their passion while prioritizing safety and style.
+</p>
+<br>
+<p>
+  <%= link_to 'Checkout Our Products', '/', class: "button is-white" %>
+</p>
+</div>
+</section>
+
+
+<h2 class="subtitle mt-6 mb-6 has-text-centered"> Our Newest Products </h2>
+
+<div class="columns is-centered">
+    <% @newproducts.each do |product| %>
+        <div class="column is-one-third">
+            <div class="card card-fixed-size">
+                <div class="card-image">
+                  <figure class="image is-4by3">
+
+                  </figure>
+                </div>
+                <div class="card-content">
+                  <%= link_to product.productname, product_path(product) %>
+
+                </div>
+            </div>
+        </div>
+    <% end %>
+</div>
+
+<h2 class="subtitle mt-6 mb-6 has-text-centered"> Recently Updated Product </h2>
+
+<div class="columns is-centered">
+  <% @updatedproducts.each do |product| %>
+    <div class="column is-one-third">
+            <div class="card card-fixed-size">
+                <div class="card-image">
+                  <figure class="image is-4by3">
+
+                  </figure>
+                </div>
+                <div class="card-content">
+                  <%= link_to product.productname, product_path(product) %>
+                </div>
+            </div>
+        </div>
+  <% end %>
+</div>
+
+
+
 
 <% @categories.each do |category| %>
   <p>
     <%= category.categoryname %>
     <%= link_to category.categoryname, category_path(category) %>
-  </p>
-<% end %>
-
-<h2> Our Newest Products </h2>
-
-<% @newproducts.each do |product| %>
-  <p>
-    <%= link_to product.productname, product_path(product) %>
-  </p>
-<% end %>
-
-<h2> Recently Updated Product </h2>
-
-<% @updatedproducts.each do |product| %>
-  <p>
-    <%= link_to product.productname, product_path(product) %>
   </p>
 <% end %>

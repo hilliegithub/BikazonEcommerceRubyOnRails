@@ -12,17 +12,17 @@
   </head>
 
   <body>
+        <%= render "home/menu"%>
   <section class="section">
       <div class="container">
 
-    <% if notice %>
-     <p class="notice"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-      <p class="alert"><%= alert %></p>
-    <% end %>
-    <%= render "home/menu"%>
-    <%= yield %>
+        <% if notice %>
+        <p class="notice"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="alert"><%= alert %></p>
+        <% end %>
+        <%= yield %>
       </div>
   </section>
   </body>
