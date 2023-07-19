@@ -1,20 +1,30 @@
 
 
+<section class=" mt-5">
+
+<%= paginate @products %>
 <% @products.each do |product| %>
 <article class="media">
   <figure class="media-left">
     <p class="image is-64x64">
-      <img src="https://bulma.io/images/placeholders/128x128.png">
+      <% if product.images.first.present? %>
+        <%= image_tag(product.images.first.variant(resize_to_limit: [100,100])) %>
+      <% else %>
+        <p>No Image</p>
+      <% end %>
     </p>
   </figure>
   <div class="media-content">
     <div class="content">
       <p>
-        <strong><%= product.productname %></strong> <small>@johnsmith</small> <small>31m</small>
+        <strong><%= product.productname %></strong>
         <br>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+        <%= product.description %>
       </p>
+      <small><%= link_to 'Check Out', product_path(product) %></small>
     </div>
   </div>
 </article>
 <% end %>
+
+</section>

@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
   def index
-    @categories = Category.all
     @products = Product.all.shuffle.take(6)
 
     # Product is new if created date and updated date is within the last 3 days

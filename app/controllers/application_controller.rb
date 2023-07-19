@@ -15,5 +15,6 @@ class ApplicationController < ActionController::Base
 
   def set_dropdown_options
     @search_categories = Category.pluck(:categoryname)
+    @categories = Category.all
   end
 end

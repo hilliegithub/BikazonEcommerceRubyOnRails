@@ -29,7 +29,7 @@ is committed to ensuring your satisfaction.</p>
 </p>
 <br>
 <p>
-  <%= link_to 'Checkout Our Products', '/', class: "button is-white" %>
+  <%= link_to 'Checkout Our Products', product_all_path , class: "button is-white" %>
 </p>
 </div>
 </section>
@@ -43,7 +43,11 @@ is committed to ensuring your satisfaction.</p>
             <div class="card card-fixed-size">
                 <div class="card-image">
                   <figure class="image is-4by3">
-
+                       <% if product.images.first.present? %>
+                          <%= image_tag(product.images.first.variant(resize_to_limit: [100,100])) %>
+                       <% else %>
+                          <p>No Image</p>
+                      <% end %>
                   </figure>
                 </div>
                 <div class="card-content">
@@ -55,7 +59,7 @@ is committed to ensuring your satisfaction.</p>
     <% end %>
 </div>
 
-<h2 class="subtitle mt-6 mb-6 has-text-centered"> Recently Updated Product </h2>
+<h2 class="subtitle mt-6 mb-6 has-text-centered"> Recently Updated Products </h2>
 
 <div class="columns is-centered">
   <% @updatedproducts.each do |product| %>
@@ -77,9 +81,3 @@ is committed to ensuring your satisfaction.</p>
 
 
 
-<% @categories.each do |category| %>
-  <p>
-    <%= category.categoryname %>
-    <%= link_to category.categoryname, category_path(category) %>
-  </p>
-<% end %>

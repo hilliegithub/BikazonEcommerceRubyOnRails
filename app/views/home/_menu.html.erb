@@ -25,6 +25,15 @@
                         <% end %>
                     </div>
                 </div>
+                <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">Categories</a>
+                        <div class="navbar-dropdown">
+                            <% @categories.each do |category| %>
+                                <%= link_to category.categoryname, category_path(category), class: "navbar-item" %>
+                            <% end %>
+                        </div>
+                </div>
+
             </div>
         </div>
 
