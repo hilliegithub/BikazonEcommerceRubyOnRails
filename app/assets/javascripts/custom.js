@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Get the select element by its id
+    const selectElement = document.getElementById("category");
+
+    // Add padding of 5 pixels to the select element
+    selectElement.style.padding = "5px";
     // Get the menu button element
     var menuButton = document.querySelector('.navbar-burger');
 
@@ -13,10 +18,5 @@ document.addEventListener('DOMContentLoaded', function() {
       // Toggle the 'is-active' class on the target menu
       targetMenu.classList.toggle('is-active');
 
-      // Get the select element by its id
-      const selectElement = document.getElementById("category");
-
-      // Add padding of 5 pixels to the select element
-      selectElement.style.padding = "5px";
     });
   });
