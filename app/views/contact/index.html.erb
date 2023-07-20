@@ -1,6 +1,37 @@
-<h1>Contact Page</h1>
-<p>Call Us at: <%= @contact.phonenumber %></p>
-<p>Email Address: <%= @contact.email %></p>
-<p>Opening Hours: <%= @contact.openinghours %></p>
-FAQ:
-<textarea><%= @contact.faq %></textarea>
+<h1 class="is-size-2 mt-6 mb-6 has-text-centered"> Contact Page </h1>
+
+<div class="container">
+  <%= form_for(@contact) do |f| %>
+
+    <div class="field">
+      <label class="label">Call Us at:</label>
+      <div class="control">
+        <p class="is-static"><%= @contact.phonenumber %></p>
+      </div>
+    </div>
+
+
+    <div class="field">
+      <label class="label">Email Address:</label>
+      <div class="control">
+        <p class="is-static"><%= @contact.email %></p>
+      </div>
+    </div>
+
+
+    <div class="field">
+      <label class="label">Opening Hours:</label>
+      <div class="control">
+        <p class="is-static"><%= @contact.openinghours %></p>
+      </div>
+    </div>
+
+
+    <div class="field">
+      <label class="label">FAQ:</label>
+      <div class="control">
+        <textarea class="textarea is-static"><%= @contact.faq %></textarea>
+      </div>
+    </div>
+  <% end %>
+</div>

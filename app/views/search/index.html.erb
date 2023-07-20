@@ -1,10 +1,17 @@
-<h1>Search Results</h1>
-<%= @products.count %>
-<ul>
+<h1 class="is-size-2 mt-6 mb-6 has-text-centered"> Search Results </h1>
+
+
+<section class=" mt-5">
+
+ <p>Your search for "<%= @searchterm %>" in <%= @searchCategory %> found <%= @products.count %> results</p>
+
+<ul class="mt-5">
     <% @products.each do |prod| %>
         <li>
             <%= prod.productname %>
-            <%= link_to 'View ' + prod.productname, product_path(prod)  %>
+            <%= link_to 'Check it out ', product_path(prod), class: "ml-5"  %>
         </li>
     <% end %>
 </ul>
+
+</section>

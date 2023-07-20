@@ -1,5 +1,15 @@
 
-<%= paginate products %>
+<div class="container">
+  <div class="columns">
+    <div class="column"></div>
+    <div class="column"></div>
+    <div class="column is-one-fifth">
+      <!-- Your main content goes here -->
+      <%= paginate products, previous_label: "&laquo; Previous", next_label: "Next &raquo;", class: "pagination is-centered" %>
+    </div>
+  </div>
+</div>
+
 <% products.each do |product| %>
 <article class="media">
   <figure class="media-left">

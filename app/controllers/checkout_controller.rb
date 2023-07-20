@@ -9,6 +9,7 @@ class CheckoutController < ApplicationController
         # If cart is empty just return
         if @cart.length == 0
             redirect_to cart_path
+            return
         end
         # Check If the user is logged in.
         if account_signed_in?
