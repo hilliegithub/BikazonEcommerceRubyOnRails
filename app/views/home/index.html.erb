@@ -40,19 +40,22 @@ is committed to ensuring your satisfaction.</p>
 <div class="columns is-centered">
     <% @newproducts.each do |product| %>
         <div class="column is-one-third">
-            <div class="card card-fixed-size">
+            <div class="card card-fixed-size is-flex is-flex-direction-column is-align-items-center has-text-centered">
                 <div class="card-image">
                   <figure class="image is-4by3">
-                       <% if product.images.first.present? %>
-                          <%= image_tag(product.images.first.variant(resize_to_limit: [100,100])) %>
+                      <% if product.images.first.present? %>
+                            <figure class="image is-128x128">
+                          <%= image_tag(product.images.first.variant(resize_to_limit: [400,400])) %>
+                            </figure>
                        <% else %>
                           <p>No Image</p>
                       <% end %>
                   </figure>
                 </div>
                 <div class="card-content">
-                  <%= link_to product.productname, product_path(product) %>
-
+                  <%= product.productname%><br>
+                  <%= number_to_currency(product.price) %><br>
+                  <%= link_to 'Check It Out!', product_path(product), class: 'button is-link is-light' %>
                 </div>
             </div>
         </div>
@@ -64,14 +67,22 @@ is committed to ensuring your satisfaction.</p>
 <div class="columns is-centered">
   <% @updatedproducts.each do |product| %>
     <div class="column is-one-third">
-            <div class="card card-fixed-size">
+            <div class="card card-fixed-size is-flex is-flex-direction-column is-align-items-center has-text-centered">
                 <div class="card-image">
                   <figure class="image is-4by3">
-
+                      <% if product.images.first.present? %>
+                            <figure class="image is-128x128">
+                          <%= image_tag(product.images.first.variant(resize_to_limit: [400,400])) %>
+                            </figure>
+                       <% else %>
+                          <p>No Image</p>
+                      <% end %>
                   </figure>
                 </div>
                 <div class="card-content">
-                  <%= link_to product.productname, product_path(product) %>
+                  <%= product.productname%><br>
+                  <%= number_to_currency(product.price) %><br>
+                  <%= link_to 'Check It Out!', product_path(product), class: 'button is-link is-light' %>
                 </div>
             </div>
         </div>

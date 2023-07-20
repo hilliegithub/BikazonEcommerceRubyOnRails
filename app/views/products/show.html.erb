@@ -2,22 +2,20 @@
 <section class="mt-5">
 
 <div class="card">
-  <div class="card-image">
-    <figure class="image is-4by3">
+  <div class="card-image is-flex is-justify-content-space-evenly">
       <% if @product.images.first.present? %>
-        <%= image_tag(@product.images.first.variant(resize_to_limit: [700,700])) %>
+        <% @product.images.each do |image| %>
+    <figure class="image is-128x128">
+            <%= image_tag(image.variant(resize_to_limit: [400,400])) %>
+    </figure>
+          <% end %>
       <% else %>
         <p>No Image</p>
       <% end %>
-    </figure>
   </div>
   <div class="card-content">
     <div class="media">
-      <div class="media-left">
-        <figure class="image is-48x48">
-          <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-        </figure>
-      </div>
+
       <div class="media-content">
         <p class="title is-4"><%= @product.productname %></p>
         <p class="subtitle is-6"><%= number_to_currency @product.price %></p>
@@ -29,7 +27,7 @@
       <br>
       <p></p>
       <% if @cart.any? do |cartitem| cartitem['id'] == @product.id end %>
-            <%= button_to 'remove from cart', remove_from_cart_path, params: { id: @product.id, where: 'P' }, method: :delete, class: "button" %>
+            <%= button_to 'remove from cart', remove_from_cart_path, params: { id: @product.id, where: 'P' }, method: :delete, class: "button is-warning" %>
       <% else %>
             <form action="<%= add_to_cart_path %>" method="post">
                 <%= number_field_tag 'quantity_param', 1, min: 1, max: @product.amountinstock, class: "select is-link" %>&nbsp;<%= button_to 'Add To Cart', add_to_cart_path, params: { id: @product.id }, method: :post, class: "button" %>
