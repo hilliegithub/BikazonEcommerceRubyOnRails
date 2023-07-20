@@ -65,7 +65,7 @@ class CartController < ApplicationController
     cartitem = session[:cart].delete_if { |a| a['id'] == id}
 
     if returnto == 'P'
-      redirect_to root_path
+      redirect_to product_path(id)
     elsif returnto == 'C'
       redirect_to cart_path
     end

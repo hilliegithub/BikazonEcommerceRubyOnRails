@@ -26,14 +26,13 @@
 
     <div class="content">
       <%= @product.description %>
-      <a href="#">#css</a> <a href="#">#responsive</a>
       <br>
       <p></p>
       <% if @cart.any? do |cartitem| cartitem['id'] == @product.id end %>
-            <%= button_to 'remove from cart', remove_from_cart_path, params: { id: @product.id, where: 'P' }, method: :delete %>
+            <%= button_to 'remove from cart', remove_from_cart_path, params: { id: @product.id, where: 'P' }, method: :delete, class: "button" %>
       <% else %>
             <form action="<%= add_to_cart_path %>" method="post">
-                <p><%= number_field_tag 'quantity_param', 1, min: 1, max: @product.amountinstock %>&nbsp;<%= button_to 'add to cart', add_to_cart_path, params: { id: @product.id }, method: :post %></p>
+                <p><%= number_field_tag 'quantity_param', 1, min: 1, max: @product.amountinstock, class: "select is-link" %>&nbsp;<%= button_to 'Add To Cart', add_to_cart_path, params: { id: @product.id }, method: :post, class: "button" %></p>
             </form>
       <% end %>
     </div>

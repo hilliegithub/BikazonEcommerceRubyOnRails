@@ -16,7 +16,7 @@ class ProductsController < ApplicationController
       session[:cart] << cartitem unless session[:cart].any? do |item| item['id'] == cartitem['id'] end
       #puts session[:cart]
 
-      redirect_to root_path
+      redirect_to product_path(params[:id].to_i)
     end
 
 end
