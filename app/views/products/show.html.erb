@@ -32,7 +32,7 @@
             <%= button_to 'remove from cart', remove_from_cart_path, params: { id: @product.id, where: 'P' }, method: :delete, class: "button" %>
       <% else %>
             <form action="<%= add_to_cart_path %>" method="post">
-                <p><%= number_field_tag 'quantity_param', 1, min: 1, max: @product.amountinstock, class: "select is-link" %>&nbsp;<%= button_to 'Add To Cart', add_to_cart_path, params: { id: @product.id }, method: :post, class: "button" %></p>
+                <%= number_field_tag 'quantity_param', 1, min: 1, max: @product.amountinstock, class: "select is-link" %>&nbsp;<%= button_to 'Add To Cart', add_to_cart_path, params: { id: @product.id }, method: :post, class: "button" %>
             </form>
       <% end %>
     </div>

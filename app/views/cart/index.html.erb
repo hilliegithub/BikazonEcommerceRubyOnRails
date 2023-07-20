@@ -1,30 +1,44 @@
-<h1>Cart#index</h1>
-<p>
-    You have <%= @cart.count %> items in your cart.
+
+<section class="mt-5">
+<h1 class="is-size-2 mt-6 mb-6 has-text-centered"> Your Cart </h1>
+<p class="mb-5">
+    You have <span class="is-link"><%= @cart.count %></span> items in your cart.
 </p>
 
-<ul>
 <% @cart.each do |item| %>
-    <li>
-        <% product = @products.find { |p| p.id == item['id'] } %>
-        <%= product.productname %>
-        <%= item['qty'] %>
+<% product = @products.find { |p| p.id == item['id'] } %>
+<article class="media">
+  <figure class="media-left">
+    <p class="image is-64x64">
+      <% if product.images.first.present? %>
+        <%= image_tag(product.images.first.variant(resize_to_limit: [100,100])) %>
+      <% else %>
+        <p>No Image</p>
+      <% end %>
+    </p>
+  </figure>
+  <div class="media-content">
+    <div class="content">
+      <p>
+        <strong><%= product.productname %></strong>
         <form action="<%= update_cart_path %>" method="post">
             <p>
-                <%= number_field_tag 'quantity_param', item['qty'], min: 0, max: product['amountinstock'] %>
+                <%= number_field_tag 'quantity_param', item['qty'], min: 0, max: product['amountinstock'] , class: "button"%>
+
+                <%= button_to 'update', update_cart_path, params: { id: item['id'] }, method: :put, class: "button" %>
             </p>
             <p>
-                <%= button_to 'update', update_cart_path, params: { id: item['id'] }, method: :put %>
-            </p>
-            <p>
-                <%= button_to 'remove', remove_from_cart_path, params: { id: item['id'], where: 'C' }, method: :delete %>
+                <%= button_to 'remove', remove_from_cart_path, params: { id: item['id'], where: 'C' }, method: :delete, class: "button is-warning" %>
             </p>
         </form>
-    </li>
+      </p>
+    </div>
+  </div>
+</article>
 <% end %>
-</ul>
 
-<p>
+
+<p class="has-text-left mt-5">
     Total Before Tax: <%= number_to_currency(@estimated, precision: 2) %>
 </p>
 <% if @taxprovince.nil? %>
@@ -40,8 +54,10 @@
     </p>
 <% end %>
 
-<div data-turbo='false'>
+<div data-turbo='false' class="mt-5">
 <%= form_with url: checkout_path do |f| %>
-    <%= f.submit 'Place Order' %>
+    <%= f.submit 'Place Order', class: "button is-link" %>
 <% end %>
 </div>
+
+</section>
