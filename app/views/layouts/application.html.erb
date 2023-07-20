@@ -17,11 +17,17 @@
       <div class="container">
 
         <% if notice %>
-        <p class="notice"><%= notice %></p>
+          <div class="notification is-primary">
+            <%= notice %>
+          </div>
         <% end %>
+
         <% if alert %>
-          <p class="alert"><%= alert %></p>
+          <div class="notification is-danger">
+            <%= alert %>
+          </div>
         <% end %>
+
         <%= yield %>
       </div>
   </section>
