@@ -1,34 +1,36 @@
-<h1> Thanks for your order! We here at Bikazon really appreciate your support! </h1>
+<section class="mt-5">
+<h1 class="is-size-2 mt-6 mb-6 has-text-centered"> Thanks for your order! </h1>
+<h2 class="subtitle">  We here at Bikazon really appreciate your support! </h2>
 <h3>Here's a summary of your order:</h3>
-        <table>
+        <table class="table mt-5 is-fullwidth">
             <tr>
-                <td colspan="4"><h3>Address Information</h3></td>
+                <th colspan="4"><strong>Address Information</strong></th>
             </tr>
             <tr>
-                <td class="alignright"><span class="bold">Address:</span></td>
+                <td class="alignright"><strong>Address:</strong></td>
                 <td><%= @buyer[:address] %></td>
-                <td class="alignright"><span class="bold">Postal Code:</span></td>
+                <td class="alignright"><strong>Postal Code:</strong></td>
                 <td><%= @buyer[:postalcode] %></td>
             </tr>
             <tr>
-                <td class="alignright"><span class="bold">Province:</span></td>
+                <td class="alignright"><strong>Province:</strong></td>
                 <td><%= @buyer[:province] %></td>
-                <td colspan="2" class="alignright"><span class="bold">Email:</span></td>
+                <td colspan="2" class="alignright"><strong>Email:</strong></td>
                 <td colspan="2"><%= @buyer[:email] %></td>
             </tr>
             <tr>
-                <td class="alignright"><span class="bold">View Your Invoice</span></td>
-                <td><a href="<%= @buyer[:invoice_url] %>" target="_blank" rel="noopener noreferrer" >invoice</a></td>
+                <td class="alignright"><strong>View Your Invoice</strong></td>
+                <td><a href="<%= @buyer[:invoice_url] %>" target="_blank" rel="noopener noreferrer" >Invoice</a></td>
             </tr>
         </table>
-        <table>
+        <table class="table">
             <tr>
-                <td colspan="3"><h3>Order Details</h3></td>
+                <td colspan="3"><strong>Order Details</strong></td>
             </tr>
             <tr>
-                <td><span class="bold">Quantity</span></td>
-                <td><span class="bold">Description</span></td>
-                <td><span class="bold">Cost</span></td>
+                <td><strong>Quantity</strong></td>
+                <td><strong>Description</strong></td>
+                <td><strong>Cost</strong></td>
             </tr>
             <% @oorderitem.each do |orderitem| %>
                 <tr>
@@ -39,7 +41,8 @@
             <% end %>
             <tr>
                 <td></td>
-                <td class='alignright'><span class="bold">Totals</span></td>
-                <td class='alignright'><span class="bold"><%= @total %></span></td>
+                <td><strong>Totals:</strong></td>
+                <td><%= @total %></td>
             </tr>
         </table>
+        </section>
