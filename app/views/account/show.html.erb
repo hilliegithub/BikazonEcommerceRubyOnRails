@@ -1,6 +1,7 @@
-<h1>Account Details</h1>
+<section class="mt-5">
+<h1 class="is-size-2 mt-6 mb-6 has-text-centered"> Account Details </h1>
 
-<table>
+<table class="table">
   <tr>
     <th>Email</th>
     <td><%= @account.email %></td>
@@ -43,5 +44,8 @@
   </tr>
 </table>
 
-<%= link_to 'Edit', account_edit_path %> |
-<%= link_to 'Back', '#' %>
+  <div class="control">
+    <%= link_to 'Edit', account_edit_path, class: 'button is-link' %>
+  </div>
+
+</section>

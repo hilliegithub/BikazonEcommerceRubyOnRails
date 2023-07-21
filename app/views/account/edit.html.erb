@@ -1,54 +1,83 @@
-<h1>Edit Account</h1>
+<section class="mt-5">
+<h1 class="is-size-2 mt-6 mb-6 has-text-centered"> Edit Account </h1>
 
+<div class="container">
+  <div class="columns">
+    <div class="column is-one-third">
 <% if @error_message.present? %>
   <div class="error-message">
     <%= @error_message %>
   </div>
 <% end %>
 <%= form_with(model: @account, url: account_edit_path(@account), method: :patch) do |form| %>
-  <div>
-    <%= form.label :email %>
-    <%= form.text_field :email %>
+  <div class="field">
+    <%= form.label :email, class: 'label' %>
+    <div class="control">
+    <%= form.text_field :email, class: 'input' %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :password %>
-    <%= form.password_field :password %>
+  <div class="field">
+    <%= form.label :password, class: 'label' %>
+    <div class="control">
+    <%= form.password_field :password, class: 'input' %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :primaryaddressstreet %>
-    <%= form.text_field :primaryaddressstreet %>
+  <div class="field">
+    <%= form.label :primaryaddressstreet, class: 'label' %>
+    <div class="control">
+    <%= form.text_field :primaryaddressstreet, class: 'input' %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :primarypostalcode %>
-    <%= form.text_field :primarypostalcode %>
+  <div class="field">
+    <%= form.label :primarypostalcode, class: 'label' %>
+    <div class="control">
+    <%= form.text_field :primarypostalcode, class: 'input' %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :secondaryaddressstreet %>
-    <%= form.text_field :secondaryaddressstreet %>
+  <div class="field">
+    <%= form.label :secondaryaddressstreet, class: 'label' %>
+    <div class="control">
+    <%= form.text_field :secondaryaddressstreet, class: 'input' %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :secondarypostalcode %>
-    <%= form.text_field :secondarypostalcode %>
+  <div class="field">
+    <%= form.label :secondarypostalcode, class: 'label' %>
+    <div class="control">
+    <%= form.text_field :secondarypostalcode, class: 'input' %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :primary_province_id %>
+  <div class="field">
+    <%= form.label :primary_province_id, class: 'label' %>
+    <div class="control select">
     <%= form.collection_select :primary_province_id, Province.all, :id, :provincename, prompt: true %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :secondary_province_id %>
+  <div class="field">
+    <%= form.label :secondary_province_id, class: 'label' %>
+    <div class="control select">
     <%= form.collection_select :secondary_province_id, Province.all, :id, :provincename, prompt: true %>
+    </div>
   </div>
 
-  <div>
-    <%= form.submit "Update Account" %>
+  <div class="field is-grouped">
+    <div class="control">
+    <%= form.submit "Update Account", class: 'button is-link' %>
+  </div>
+    <div class="control">
+    <%= link_to 'Back', account_path(@account), class: 'button is-link is-light' %>
+  </div>
   </div>
 <% end %>
+<div class="column"></div>
+  <div class="column"></div>
+  </div>
+</div>
 
-<%= link_to 'Back', account_path(@account) %>
+</section>
