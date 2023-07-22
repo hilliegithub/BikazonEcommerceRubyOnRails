@@ -195,7 +195,9 @@ class CheckoutController < ApplicationController
                 prod.save
             end
 
-            session[:cart] = nil
+            if session[:cart].present?
+                session.delete(:cart)
+            end
         end
     end
 
