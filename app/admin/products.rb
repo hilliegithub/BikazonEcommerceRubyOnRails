@@ -21,7 +21,7 @@ ActiveAdmin.register Product do
     column :price
     column :amountinstock
     column "Category" do |product|
-      link_to product.category.categoryname, admin_category_path(product.category)
+      link_to product.category.categoryname, admin_bike_category_path(product.category)
     end
     column :description
     column  "Images" do |product|
@@ -43,7 +43,7 @@ ActiveAdmin.register Product do
       end
       row :amountinstock
       row "Category" do |product|
-        link_to product.category.categoryname, admin_category_path(product.category)
+        link_to product.category.categoryname, admin_bike_category_path(product.category)
       end
       row :description
       row "Images" do |product|
